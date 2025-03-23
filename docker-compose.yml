@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: pookiepoo-client
+    build: ./dating-app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./dating-app:/app  # Mount local code for live updates
+      - /app/node_modules   # Prevents overwriting node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # Fixes file-watching issues in Docker
+    stdin_open: true  # Keeps Vite interactive
+    tty: true  # Allows color logs and prevents container exit
