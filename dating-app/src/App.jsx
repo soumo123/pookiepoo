@@ -14,6 +14,8 @@ function App() {
   const LazyLoginWithPhone = lazy(()=>import("./components/LoginWithPhone.jsx"))
   const LazyOtp = lazy(()=>import("./components/Otp.jsx"))
   const LazyLogin = lazy(()=>import("./components/Login.jsx"))
+  const LazyViewProdile = lazy(()=>import("./components/Viewcard.jsx"))
+
 
   return (
     <>
@@ -27,6 +29,7 @@ function App() {
         <Route exact={true} path={"/loginwithphone"} element={<LazyLoginWithPhone/>}/>
         <Route exact={true} path={"/otp"} element={<LazyOtp/>}/>
         <Route exact={true} path={"/login"} element={<LazyLogin/>}/>
+        <Route exact={true} path={"/profile"} element={<LazyViewProdile/>}/>
       </Routes>
       </BrowserRouter>
       </Suspense>
