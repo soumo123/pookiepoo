@@ -68,7 +68,7 @@ const ViewCard = ({ profile }) => {
       {/* Profile Info */}
       <div className="profile-info">
         <div className="name-age">
-          <h1>{user.name}, {user.age}</h1>
+          <h1>{user.name}, {user.age} <i className="bi bi-patch-check-fill text-primary fs-5"></i></h1> 
           <div className="location">
             <i class="icon-sm bi bi-geo-alt"></i>
             <span>{user.city}</span>
