@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-    FiArrowLeft, 
-    FiHeart, 
-    FiX, 
-    FiStar, 
-    FiInfo,
-    FiMapPin,
-    FiCamera,
-    FiUser 
-  } from 'react-icons/fi';
-  import { FaHeart, FaStar } from 'react-icons/fa';
 
 const ViewCard = ({ profile }) => {
     const navigate = useNavigate();
@@ -46,11 +35,11 @@ const ViewCard = ({ profile }) => {
     {/* Header */}
     <header className="profile-header">
       <button className="back-button" onClick={() => hanldeBack()}>
-        <FiArrowLeft className="icon" />
+        <i class="bi bi-arrow-left icon fs-4"></i>
       </button>
       <div className="header-logo" onClick={hanldeBack}></div>
       <button className="info-button">
-        <FiInfo className="icon" />
+        <i class="bi bi-info-circle icon fs-4"></i>
       </button>
     </header>
 
@@ -81,14 +70,14 @@ const ViewCard = ({ profile }) => {
         <div className="name-age">
           <h1>{user.name}, {user.age}</h1>
           <div className="location">
-            <FiMapPin className="icon-sm" />
+            <i class="icon-sm bi bi-geo-alt"></i>
             <span>{user.city}</span>
           </div>
         </div>
 
         <div className="details-card">
           <div className="detail-item">
-            <FiUser className="icon" />
+            <i class="icon bi bi-person"></i>
             <div>
               <h3>About Me</h3>
               <p>{user.bio}</p>
@@ -96,7 +85,7 @@ const ViewCard = ({ profile }) => {
           </div>
 
           <div className="detail-item">
-            <FiCamera className="icon" />
+          <i class="icon bi bi-camera"></i>
             <div>
               <h3>Profession</h3>
               <p>{user.profession}</p>
@@ -121,7 +110,7 @@ const ViewCard = ({ profile }) => {
         className="action-btn dislike"
         onClick={() => navigate(-1)}
       >
-        <FiX className="icon-lg" />
+        <i class="bi bi-x-lg fs-2"></i>
       </button>
       
       <button 
@@ -129,9 +118,9 @@ const ViewCard = ({ profile }) => {
         onClick={() => setIsSuperLiked(!isSuperLiked)}
       >
         {isSuperLiked ? (
-          <FaStar className="icon-lg" />
+          <i class="bi bi-star fs-2"></i>
         ) : (
-          <FiStar className="icon-lg" />
+          <i class="bi bi-star fs-2"></i>
         )}
       </button>
       
@@ -140,9 +129,9 @@ const ViewCard = ({ profile }) => {
         onClick={() => setIsLiked(!isLiked)}
       >
         {isLiked ? (
-          <FaHeart className="icon-lg" />
+          <i class="bi bi-heart fs-2"></i>
         ) : (
-          <FiHeart className="icon-lg" />
+          <i class="bi bi-heart fs-2"></i>
         )}
       </button>
     </div>
