@@ -6,9 +6,9 @@ import path from "path";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      "bootstrap-icons": path.resolve(__dirname, "node_modules/bootstrap-icons"),
-    },
-  },
+  // resolve: {
+  //   alias: {
+  //     "bootstrap-icons": path.resolve(__dirname, "node_modules/bootstrap-icons"),
+  //   },
+  // },
 })
