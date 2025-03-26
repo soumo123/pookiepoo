@@ -19,13 +19,13 @@ const Login = () => {
       {/* <a href="#" class="back-button">
       <i class="bi bi-arrow-left icon fs-4"></i>
         </a> */}
-        <span className="back-button"  onClick={() => handleBack()}>
+        <span className="back-button" onClick={() => handleBack()}>
         <i class="bi bi-arrow-left icon fs-4"></i>
       </span>
         <div class="login-card p-4 position-relative">
      
           <div class="text-center mb-4">
-            <h2 class="fw-bold mb-2 logo">Pookiepoo</h2>
+            <h2 class="fw-bold mb-2 logo text-white">Pookiepoo</h2>
             {/* <p class="text-muted">Please login to continue</p> */}
           </div>
 
@@ -40,15 +40,15 @@ const Login = () => {
               <input type="password" class="form-control custom-input" placeholder="Password" />
             </div>
 
-            <button type="submit" class="btn w-100 login-btn mb-3">Continue</button>
+            <button type="submit" class="w-100 login-btn-login mb-3">Continue</button>
 
             <div class="text-center mb-4">
-              <a href="#" class="text-decoration-none text-secondary">Forgot Password?</a>
+              <a href="#" class="text-decoration-none text-white" style={{fontWeight:"700"}}>Forgot Password?</a>
             </div>
 
             <div class="d-flex align-items-center mb-4">
               <div class="divider"></div>
-              <span class="px-3 text-muted small">OR</span>
+              <span class="px-3 text-white" style={{fontWeight:"700"}}>OR</span>
               <div class="divider"></div>
             </div>
 

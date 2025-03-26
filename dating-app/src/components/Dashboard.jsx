@@ -38,13 +38,14 @@ const Dashboard = () => {
               className="signup-btn"
               onClick={handleCreateAccount}
             >
-              Create Account
+              Create Account 
             </button>
             <button 
-              className="login-btn"
+              className="login-btn-login"
+              style={{width:"60%"}}
               onClick={handleLoginWithPhone}
             >
-              Log In by phone number
+              Signin With Phone
             </button>
           </div>
         </div>
