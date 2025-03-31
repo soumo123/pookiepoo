@@ -9,6 +9,8 @@ import './index.css';
 import Questions from './pages/questions/Questions';
 import Addquestion from './pages/questions/Addquestion';
 import Listofquestions from './pages/questions/Listofquestions';
+import UserList from './pages/users/UserList';
+import Viewuser from './pages/users/Viewuser';
 
 
 const App = () => {
@@ -32,6 +34,8 @@ const App = () => {
             <Route path="/questions" element={<Questions />} />
             <Route path="/addquestion" element={<Addquestion />} />
             <Route path="/catques/:name" element={<Listofquestions />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/viewuser" element={<Viewuser />} />
           </Routes>
         </div>
       </div>

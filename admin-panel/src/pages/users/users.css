@@ -1,0 +1,130 @@
+/* Custom Table Styles */
+.table {
+    --bs-table-bg: #fff;
+    --bs-table-striped-bg: #f9fafb;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  .table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    border-bottom: 2px solid #e9ecef;
+  }
+  
+  .table-hover tbody tr {
+    transition: all 0.15s ease;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+  }
+  
+  /* Pagination Styles */
+  .pagination .page-item.active .page-link {
+    background-color: #3b71ca;
+    border-color: #3b71ca;
+  }
+  
+  .pagination .page-link {
+    color: #4a5568;
+    border-radius: 6px !important;
+    margin: 0 4px;
+    border: 1px solid #e2e8f0;
+  }
+  
+  /* Search Input */
+  .input-group-text {
+    background-color: #fff;
+    border-right: none;
+  }
+  
+  .form-control {
+    border-left: none;
+    padding-left: 0;
+  }
+  
+  .form-control:focus {
+    box-shadow: none;
+  }
+  .table-container {
+    border: 1px solid #f0f2f5;
+  }
+  .table-header {
+    background-color: #f8fafc;
+  }
+  .table-header th {
+    font-weight: 600;
+    color: #64748b;
+    border-bottom: 2px solid #f1f5f9 !important;
+  }
+  .user-row td {
+    border-top: 1px solid #f1f5f9 !important;
+    vertical-align: middle;
+  }
+  .bg-primary-light {
+    background-color: #e3f2fd;
+  }
+  .role-badge {
+    background-color: #f8f9fa;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: #475569;
+  }
+  .status-indicator {
+    font-size: 0.7rem;
+    vertical-align: middle;
+  }
+  .bg-success-light {
+    background-color: #e6f4ea;
+  }
+  .bg-warning-light {
+    background-color: #fff4e6;
+  }
+  
+  .bg-secondary-light {
+    background-color: #f1f3f5;
+  }
+  .btn-action {
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+  .btn-action:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+  }
+  .search-container .form-control {
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 10px 20px 10px 40px;
+    transition: all 0.2s ease;
+  }
+  .search-container .form-control:focus {
+    border-color: #3b71ca;
+    box-shadow: 0 0 0 3px rgba(59, 113, 202, 0.15);
+  }
+  
+  .pagination .page-link {
+    border-radius: 8px !important;
+    margin: 0 3px;
+    min-width: 36px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .pagination .page-item.active .page-link {
+    border-color: #3b71ca;
+  }
