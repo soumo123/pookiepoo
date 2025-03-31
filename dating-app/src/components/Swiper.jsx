@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSwipeable } from 'react-swipeable';
 import { useNavigate } from "react-router-dom";
-import { FaHome, FaHeart, FaComments, FaUser } from 'react-icons/fa';
 
 const Swiper = () => {
   const [profiles] = useState([
@@ -94,19 +93,23 @@ const Swiper = () => {
       </div>
       <nav className="bottom-nav">
         <button className="nav-item active">
-          <FaHome className="nav-icon" />
+          {/* <FaHome className="nav-icon" /> */}
+          <i class="bi bi-house-door-fill nav-icon"></i>
           <span>Discover</span>
         </button>
         <button className="nav-item">
-          <FaComments className="nav-icon" />
+          {/* <FaComments className="nav-icon" /> */}
+          <i class="bi bi-chat-left-fill nav-icon"></i>
           <span>Matches</span>
         </button>
         <button className="nav-item">
-          <FaHeart className="nav-icon" />
+          {/* <FaHeart className="nav-icon" /> */}
+          <i class="bi bi-heart-fill nav-icon"></i>
           <span>Likes</span>
         </button>
         <button className="nav-item">
-          <FaUser className="nav-icon" />
+          {/* <FaUser className="nav-icon" /> */}
+          <i class="bi bi-person-fill nav-icon"></i>
           <span>Profile</span>
         </button>
       </nav>
