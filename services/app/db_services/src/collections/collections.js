@@ -1,6 +1,7 @@
 const collections = {
     USERS:"users",
-    USER_INFORMATION:"userinformation"
+    USER_INFORMATION:"userinformation",
+    QUESTIONS:'questions'
 }
 
 export default collections

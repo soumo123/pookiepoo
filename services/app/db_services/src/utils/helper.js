@@ -2,18 +2,27 @@
 import collections from '../collections/collections.js'
 import mongoose from 'mongoose';
 
-const createUserId = async (collection) => {
+const generateId = async (collection) => {
     let existingIds = [];
     let lastId;
     let idPrefix;
     let idLength = 8;
     try {
-        console.log("collection", collection)
-        idPrefix = "USER";
-        const Model = mongoose.connection.collection(collection);
-        const result = await Model.find().sort({ _id: -1 }).limit(1).toArray();
-        lastId = result[0];
-        existingIds.push(lastId && lastId.user_id ? lastId.user_id : "");
+        if (ids === "USER") {
+            idPrefix = "USER";
+            const Model = mongoose.connection.collection(collection);
+            const result = await Model.find().sort({ _id: -1 }).limit(1).toArray();
+            lastId = result[0];
+            existingIds.push(lastId && lastId.user_id ? lastId.user_id : "");
+          }
+          if (ids === "QUES") {
+            idPrefix = "QUES";
+            const Model = mongoose.connection.collection(collection);
+            const result = await Model.find().sort({ _id: -1 }).limit(1).toArray();
+            lastId = result[0];
+            existingIds.push(lastId && lastId.user_id ? lastId.user_id : "");
+          }
+
         const maxNumericPart = existingIds.reduce((max, id) => {
             if (!id || !id.startsWith(idPrefix)) return max; // Check if id is undefined or doesn't start with idPrefix
 
@@ -31,4 +40,4 @@ const createUserId = async (collection) => {
     }
 }
 
-export { createUserId }
+export { generateId }

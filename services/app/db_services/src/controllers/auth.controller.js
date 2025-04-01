@@ -1,6 +1,6 @@
 import collections from '../collections/collections.js'
 import mongoose from 'mongoose';
-import { createUserId } from '../utils/helper.js';
+import { generateId } from '../utils/helper.js';
 // import Error from '../errorCodes/errors.js'
 
 const isValidCollection = (name) => {
@@ -20,7 +20,7 @@ const insertData = async (req, res) => {
     }
     try {
         const Model = mongoose.connection.collection(collection);
-        const user_id = await createUserId(collection)
+        const user_id = await generateId(collection)
         const result = await Model.insertOne({...data,user_id});
         return res.status(200).send({ msg: "Data inserted",success:true });
     } catch (err) {
