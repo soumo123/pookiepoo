@@ -20,7 +20,7 @@ const insertData = async (req, res) => {
     }
     try {
         const Model = mongoose.connection.collection(collection);
-        const user_id = await generateId(collection)
+        const user_id = await generateId(collection,"USER")
         const result = await Model.insertOne({...data,user_id});
         return res.status(200).send({ msg: "Data inserted",success:true });
     } catch (err) {
