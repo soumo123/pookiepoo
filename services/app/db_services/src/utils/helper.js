@@ -2,7 +2,7 @@
 import collections from '../collections/collections.js'
 import mongoose from 'mongoose';
 
-const generateId = async (collection) => {
+const generateId = async (collection,ids) => {
     let existingIds = [];
     let lastId;
     let idPrefix;
@@ -15,12 +15,12 @@ const generateId = async (collection) => {
             lastId = result[0];
             existingIds.push(lastId && lastId.user_id ? lastId.user_id : "");
           }
-          if (ids === "QUES") {
-            idPrefix = "QUES";
+          if (ids === "QUE") {
+            idPrefix = "QUE";
             const Model = mongoose.connection.collection(collection);
             const result = await Model.find().sort({ _id: -1 }).limit(1).toArray();
             lastId = result[0];
-            existingIds.push(lastId && lastId.user_id ? lastId.user_id : "");
+            existingIds.push(lastId && lastId.ques_id ? lastId.ques_id : "");
           }
 
         const maxNumericPart = existingIds.reduce((max, id) => {

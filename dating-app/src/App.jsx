@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Loader from './custom/Loader';
+import ParallelUpload from './components/ParallelUpload.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,6 +31,7 @@ function App() {
         <Route exact={true} path={"/otp"} element={<LazyOtp/>}/>
         <Route exact={true} path={"/login"} element={<LazyLogin/>}/>
         <Route exact={true} path={"/profile"} element={<LazyViewProdile/>}/>
+        <Route exact={true} path={"/upload"} element={<ParallelUpload/>}/>
       </Routes>
       </BrowserRouter>
       </Suspense>
