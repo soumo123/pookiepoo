@@ -1,16 +1,35 @@
-import React from 'react';
+import React,{useState,useMemo} from 'react';
 import { Link , useNavigate} from 'react-router-dom';
 import { PlusLg } from 'react-bootstrap-icons';
+import axiosInstance from '../../axiosInstance';
 import './question.css';
 
 const Questions = () => {
 
   const navigate = useNavigate()
+  const[countObj,setCountObj]=useState({})
 
   const handleNavigate = ()=>{
     navigate("/addquestion")
   }
 
+
+  const getAllQuestions = async () => {
+    try {
+      const result = await axiosInstance.get(`/getcount?query=&category=&limit=${100000}&offset=${0}`)
+      if (result.status === 200) {
+        setCountObj(result.data.data)
+
+      }
+    } catch (error) {
+      console.log(error)
+      setCountObj({})
+    }
+  }
+    useMemo(() => {
+      getAllQuestions()
+    }, [])
+  
   return (
 <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -28,7 +47,7 @@ const Questions = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5 className="card-title fw-bold mb-0">Basics</h5>
-                <span className="badge bg-primary">15 Questions</span>
+                <span className="badge bg-primary">{countObj.basics} Questions</span>
               </div>
               <p className="card-text text-secondary">Fundamental questions for initial setup and configuration</p>
               <div className="d-flex justify-content-end">
@@ -44,7 +63,7 @@ const Questions = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5 className="card-title fw-bold mb-0">Lifestyle</h5>
-                <span className="badge bg-success">23 Questions</span>
+                <span className="badge bg-success">{countObj.lifestyle} Questions</span>
               </div>
               <p className="card-text text-secondary">Daily life and personal preference related questions</p>
               <div className="d-flex justify-content-end">
@@ -60,7 +79,7 @@ const Questions = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5 className="card-title fw-bold mb-0">Personality</h5>
-                <span className="badge bg-info">34 Questions</span>
+                <span className="badge bg-info">{countObj.personality} Questions</span>
               </div>
               <p className="card-text text-secondary">Academic and learning-related question bank</p>
               <div className="d-flex justify-content-end">
@@ -76,7 +95,7 @@ const Questions = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5 className="card-title fw-bold mb-0">Ask Me About</h5>
-                <span className="badge bg-warning text-dark">27 Questions</span>
+                <span className="badge bg-warning text-dark">{countObj.askme} Questions</span>
               </div>
               <p className="card-text text-secondary">Random question generator for various topics</p>
               <div className="d-flex justify-content-end">
@@ -92,7 +111,7 @@ const Questions = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5 className="card-title fw-bold mb-0">Profession</h5>
-                <span className="badge bg-danger">18 Questions</span>
+                <span className="badge bg-danger">{countObj.profession} Questions</span>
               </div>
               <p className="card-text text-secondary">Career and work-related professional questions</p>
               <div className="d-flex justify-content-end">
@@ -107,7 +126,7 @@ const Questions = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h5 className="card-title fw-bold mb-0">Relationship Goals</h5>
-                <span className="badge bg-danger">18 Questions</span>
+                <span className="badge bg-danger">{countObj.relationshipgoals} Questions</span>
               </div>
               <p className="card-text text-secondary">Relationship Goals</p>
               <div className="d-flex justify-content-end">
