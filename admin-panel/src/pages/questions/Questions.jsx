@@ -59,12 +59,12 @@ const Questions = () => {
           <div className="card h-100 shadow-sm card-hover">
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <h5 className="card-title fw-bold mb-0">Education</h5>
+                <h5 className="card-title fw-bold mb-0">Personality</h5>
                 <span className="badge bg-info">34 Questions</span>
               </div>
               <p className="card-text text-secondary">Academic and learning-related question bank</p>
               <div className="d-flex justify-content-end">
-                <Link to={`/catques/education`} className="btn btn-outline-primary">Manage</Link>
+                <Link to={`/catques/personality`} className="btn btn-outline-primary">Manage</Link>
               </div>
             </div>
           </div>
@@ -97,6 +97,21 @@ const Questions = () => {
               <p className="card-text text-secondary">Career and work-related professional questions</p>
               <div className="d-flex justify-content-end">
                 <Link to={`/catques/professions`} className="btn btn-outline-primary">Manage</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card h-100 shadow-sm card-hover">
+            <div className="card-body">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="card-title fw-bold mb-0">Relationship Goals</h5>
+                <span className="badge bg-danger">18 Questions</span>
+              </div>
+              <p className="card-text text-secondary">Relationship Goals</p>
+              <div className="d-flex justify-content-end">
+                <Link to={`/catques/relationshipgoals`} className="btn btn-outline-primary">Manage</Link>
               </div>
             </div>
           </div>

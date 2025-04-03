@@ -18,8 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 //Routes///
-app.use("/api/v1",fetchRoutes)
-app.use("/api/v1",fetchquesRoutes)
+app.use("/fetchdb",fetchRoutes)
+app.use("/fetchdb",fetchquesRoutes)
 
 export default app
 

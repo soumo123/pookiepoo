@@ -49,14 +49,14 @@ const getData = async (req, res) => {
         if (category) {
             filter.category = category; // Exact match for category
         }
-
+        const totalData = await Model.countDocuments(filter);
         const questions = await Model.find(filter)
             .sort({ _id: sort })
             .skip(Number(offset))
             .limit(Number(limit))
             .toArray();
         
-        res.status(200).json(questions);
+        return res.status(200).json({ totalData, data: questions });
     } catch (error) {
         console.error("Error fetching data:", error);
         res.status(500).json({ msg: "Internal Server Error" });

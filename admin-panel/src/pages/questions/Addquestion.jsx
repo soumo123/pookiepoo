@@ -1,24 +1,31 @@
 import React, { useState } from 'react'
 import styles from '../../css/QuestionUpload.module.css';
-
+import axiosInstance from '../../axiosInstance';
+import { ToastContainer, toast } from 'react-toastify';
+import {useNavigate} from 'react-router-dom'
 
 const Addquestion = () => {
     const [questionText, setQuestionText] = useState('');
     const [options, setOptions] = useState([{ id: 1, text: '' }]);
     const [allowMultiple, setAllowMultiple] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
-
+    const [weight, setWeight] = useState(1)
+    const navigate = useNavigate()
     const QUESTION_CATEGORIES = [
+        'Basics',
         'Lifestyle',
-        'Values',
         'Personality',
-        'Preferences',
-        'Hobbies',
-        'Career',
+        'Ask Me About',
+        'Profession',
         'Relationship Goals'
     ];
 
-    const addOption = () => {
+    const weights = [
+        1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5
+    ]
+
+    const addOption = (e) => {
+        e.preventDefault();
         setOptions([...options, {
             id: options.length + 1,
             text: ''
@@ -26,6 +33,7 @@ const Addquestion = () => {
     };
 
     const removeOption = (id) => {
+        
         if (options.length > 1) {
             setOptions(options.filter(option => option.id !== id));
         }
@@ -36,15 +44,14 @@ const Addquestion = () => {
             option.id === id ? { ...option, text } : option
         ));
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         const questionData = {
-            category: selectedCategory,
-            question: questionText,
+            text: questionText,
             options: options.map(option => option.text),
+            category: selectedCategory.toLowerCase(),
+            weight: Number(weight),
             multipleSelect: allowMultiple,
-            createdAt: new Date().toISOString()
         };
 
         // Basic validation
@@ -58,42 +65,82 @@ const Addquestion = () => {
             return;
         }
 
-        if (options.some(option => !option.text.trim())) {
-            alert('All options must have text');
-            return;
+        // if (options.some(option => !option.text.trim())) {
+        //     // alert('All options must have text');
+        //     return;
+        // }
+        console.log('Submitting question:', questionData);
+        const result = await axiosInstance.post(`/createques`, questionData)
+        if (result.status === 201) {
+            setQuestionText("")
+            setOptions([{ id: 1, text: '' }])
+            setAllowMultiple(false)
+            setSelectedCategory('')
+            setWeight(1)
+            toast.success("Question added",{
+                autoClose: 2000,
+                position: "top-center",
+              })
+            setTimeout(() => {
+                navigate("/questions")
+            }, 2000);
+        }else{
+            toast.error("Question not added",{
+                autoClose: 2000,
+                position: "top-center",
+              })
         }
 
-        console.log('Submitting question:', questionData);
-
-        // Here you would typically make an API call
-        // axios.post('/api/questions', questionData)
     };
     return (
         <>
+          <ToastContainer />
             <div className="card shadow-sm">
                 <div className="card-body">
                     {/* <div className={`${styles.questionUploadContainer} bg-light`}> */}
                     {/* <div className="card shadow-lg"> */}
-                    <form onSubmit={handleSubmit} className="card-body">
+                    
                         <div className="card-body">
                             <h2 className="mb-4">Create New Question</h2>
 
                             {/* Category Selection */}
-                            <div className="mb-4">
-                                <label className="form-label">Question Category</label>
-                                <select
-                                    className="form-select"
-                                    value={selectedCategory}
-                                    onChange={(e) => setSelectedCategory(e.target.value)}
-                                >
-                                    <option value="">Select a category</option>
-                                    {QUESTION_CATEGORIES.map(category => (
-                                        <option key={category} value={category}>
-                                            {category}
-                                        </option>
-                                    ))}
-                                </select>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <div className="mb-4">
+                                        <label className="form-label">Question Category</label>
+                                        <select
+                                            className="form-select"
+                                            value={selectedCategory}
+                                            onChange={(e) => setSelectedCategory(e.target.value)}
+                                        >
+                                            <option value="">Select a category</option>
+                                            {QUESTION_CATEGORIES.map(category => (
+                                                <option key={category} value={category}>
+                                                    {category}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className='col-6'>
+                                    <div className="mb-4">
+                                        <label className="form-label">Weight</label>
+                                        <select
+                                            className="form-select"
+                                            value={weight}
+                                            onChange={(e) => setWeight(e.target.value)}
+                                        >
+                                            <option value="">Select weight</option>
+                                            {weights.map(weight => (
+                                                <option key={weight} value={weight}>
+                                                    {weight}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
 
                             {/* Question Text */}
                             <div className="mb-4">
@@ -191,10 +238,10 @@ const Addquestion = () => {
                             {/* Action Buttons */}
                             <div className="mt-4 d-flex justify-content-end gap-2">
                                 <button className="btn btn-secondary">Cancel</button>
-                                <button className="btn btn-primary">Save Question</button>
+                                <button className="btn btn-primary" onClick={handleSubmit}>Save Question</button>
                             </div>
                         </div>
-                    </form>
+                  
                     {/* </div> */}
                 </div>
                 {/* </div> */}
