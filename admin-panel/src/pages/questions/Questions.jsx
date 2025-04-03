@@ -96,7 +96,7 @@ const Questions = () => {
               </div>
               <p className="card-text text-secondary">Career and work-related professional questions</p>
               <div className="d-flex justify-content-end">
-                <Link to={`/catques/professions`} className="btn btn-outline-primary">Manage</Link>
+                <Link to={`/catques/profession`} className="btn btn-outline-primary">Manage</Link>
               </div>
             </div>
           </div>

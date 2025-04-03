@@ -46,8 +46,8 @@ const getData = async (req, res) => {
         if (query) {
             filter.text = { $regex: query, $options: 'i' }; // Case-insensitive text search
         }
-        if (category) {
-            filter.category = category; // Exact match for category
+        if (category && category.trim() !== '') {
+            filter.category = category;
         }
         const totalData = await Model.countDocuments(filter);
         const questions = await Model.find(filter)
