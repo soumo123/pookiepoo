@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 import fetchRoutes from './src/routes/userRoutes.js'
 import fetchquesRoutes from './src/routes/question.routes.js'
 
-
+dotenv.config()
 const app = express()
 
 app.use(cors())

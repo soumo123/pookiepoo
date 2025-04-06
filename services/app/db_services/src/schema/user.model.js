@@ -49,25 +49,31 @@ const userSchema = new mongoose.Schema({
     },
     profile_pic:{
         type:String,
-        required:true
+        required:true,
+        default: null
     },
-    additionalpictures:{
-        type:Array,
-        required:true
-    },
-
+    additionalpictures: [{
+        url: String,
+        key: String,
+        uploadedAt: {
+          type: Date,
+          default: Date.now
+        }
+      }],
     created_at: {
         type: Date,
-        default: () => {
-            return Date.now();
-        },
+        default:Date.now(),
+        // default: () => {
+        //     return Date.now();
+        // },
         immutable: true
     },
     updated_at: {
         type: Date,
-        default: () => {
-            return Date.now();
-        }
+        default:Date.now()
+        // default: () => {
+        //     return Date.now();
+        // }
     }
 })
 

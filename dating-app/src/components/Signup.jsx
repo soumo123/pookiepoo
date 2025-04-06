@@ -1,6 +1,8 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
- 
+import axiosInstance from '../axiosInstance';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const Signup = () => {
 
@@ -12,40 +14,104 @@ const Signup = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
+        email: '',
+        password: '',
+        mobile: '',
         age: '',
         gender: '',
-        phone: '',
-        email: '',
+        dob: '',
         // city: '',
-        location:{},
-        interestedIn: '',
-        profilePicture: null,
-        additionalPictures: [],
+        location: {},
+        interested_to: '',
+        profile_pic: null,
+        additionalpictures: [],
     });
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    const handleInputDobChange = (e) => {
+        const dob = new Date(e.target.value);
+        const today = new Date();
+
+        let age = today.getFullYear() - dob.getFullYear();
+        const m = today.getMonth() - dob.getMonth();
+
+        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        console.log("DOB:", e.target.value);
+        console.log("Age:", age);
+
+        // Optional: Update age in your formData state if needed
+        setFormData({ ...formData, dob: e.target.value, age: age })
+    };
 
     const handleFileUpload = (e, isProfile) => {
         if (e.target.files) {
             if (isProfile) {
-                setFormData({ ...formData, profilePicture: e.target.files[0] });
+                setFormData({ ...formData, profile_pic: e.target.files[0] });
             } else {
+                // Handle multiple additional pictures
+                const newFiles = Array.from(e.target.files);
                 setFormData({
                     ...formData,
-                    additionalPictures: [...formData.additionalPictures, e.target.files[0]],
+                    additionalpictures: [...formData.additionalpictures, ...newFiles],
                 });
             }
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        // Handle form submission here
-    };
+        const formDataToSend = new FormData();
 
+        formDataToSend.append('firstname', formData.firstName);
+        formDataToSend.append('lastname', formData.lastName);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('password', formData.password);
+        formDataToSend.append('mobile', formData.mobile);
+        formDataToSend.append('age', formData.age);
+        formDataToSend.append('gender', formData.gender);
+        formDataToSend.append('dob', formData.dob);
+        formDataToSend.append('interested_to', formData.interested_to);
+
+        formDataToSend.append('location', JSON.stringify(formData.location));
+
+        if (formData.profile_pic) {
+            formDataToSend.append('profile_pic', formData.profile_pic);
+        }
+
+        // Append additional pictures
+        formData.additionalpictures.forEach((file, index) => {
+            formDataToSend.append(`additionalpictures`, file);
+        });
+
+        const result = await axiosInstance.post(`/signup`, formDataToSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        if (result.status === 201) {
+            toast.success("Sign up successfully",
+                {
+                    autoClose: 2000,
+                    position: "top-center",
+                }
+            )
+            setTimeout(() => {
+                navigate("/login")
+            }, 2000);
+        } else {
+            toast.error("Ooops,Something error",
+                {
+                    autoClose: 2000,
+                    position: "top-center",
+                  }
+            )
+        }
+    };
     const isStepValid = () => {
         switch (step) {
             case 1:
@@ -54,14 +120,14 @@ const Signup = () => {
                     formData.lastName &&
                     // formData.age &&
                     formData.gender &&
-                    formData.phone &&
-                    formData.email &&
+                    formData.mobile &&
+                    formData.email && formData.password &&
                     address
                 );
             case 2:
-                return formData.interestedIn;
+                return formData.interested_to;
             case 3:
-                return formData.profilePicture;
+                return formData.profile_pic;
             default:
                 return false;
         }
@@ -74,6 +140,8 @@ const Signup = () => {
             setStep(1)
         } else if (step === 3) {
             setStep(2)
+        } else if (step === 4) {
+            setStep(3)
         } else {
             navigate("/dashboard")
         }
@@ -81,54 +149,56 @@ const Signup = () => {
 
     useEffect(() => {
         if ('geolocation' in navigator) {
-          navigator.geolocation.getCurrentPosition(
-            async (position) => {
-              const { latitude, longitude } = position.coords;
-              setLocation({ latitude, longitude });
-    
-              // Fetch human-readable address
-              try {
-                const response = await fetch(
-                  `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
-                );
-                const data = await response.json();
-                console.log(data); // helpful for debugging
-                const city = data.address.city || data.address.town || data.address.village;
-                const state = data.address.state;
-                setAddress(`${city}, ${state}`);
-                setFormData({
-                    ...formData,
-                    location:{
-                        lon:data.lon,
-                        lat:data.lat,
-                        city:data.address.city,
-                        country:data.address.country,
-                        country_code:data.address.country_code,
-                        state:data.address.state,
-                        postcode:data.address.postcode
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setLocation({ latitude, longitude });
+
+                    // Fetch human-readable address
+                    try {
+                        const response = await fetch(
+                            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+                        );
+                        const data = await response.json();
+                        console.log(data); // helpful for debugging
+                        const city = data.address.city || data.address.town || data.address.village;
+                        const state = data.address.state;
+                        setAddress(`${city}, ${state}`);
+                        setFormData({
+                            ...formData,
+                            location: {
+                                lon: data.lon,
+                                lat: data.lat,
+                                city: data.address.city,
+                                country: data.address.country,
+                                country_code: data.address.country_code,
+                                state: data.address.state,
+                                postcode: data.address.postcode
+                            }
+                        })
+                    } catch (err) {
+                        setError('Failed to fetch address');
                     }
-                })
-              } catch (err) {
-                setError('Failed to fetch address');
-              }
-            },
-            (err) => {
-              setError(err.message);
-            }
-          );
+                },
+                (err) => {
+                    setError(err.message);
+                }
+            );
         } else {
-          setError('Geolocation not supported');
+            setError('Geolocation not supported');
         }
-      }, []);
+    }, []);
 
 
     return (
         <>
+            <ToastContainer />
             <div className="container">
                 <span className="back-button" onClick={() => handleBack()}>
                     <i class="bi bi-arrow-left icon fs-4"></i>
                 </span>
                 <div className="signup-container">
+
                     <div className="header-section">
                         {/* <Heart size={48} color="#fff" fill="#fff" /> */}
                         <i class="bi bi-heart-fill fs-1"></i>
@@ -140,8 +210,8 @@ const Signup = () => {
                         <div
                             className="progress-bar"
                             role="progressbar"
-                            style={{ width: `${(step / 3) * 100}%` }}
-                            aria-valuenow={(step / 3) * 100}
+                            style={{ width: `${(step / 4) * 100}%` }}
+                            aria-valuenow={(step / 4) * 100}
                             aria-valuemin={0}
                             aria-valuemax={100}
                         />
@@ -198,10 +268,9 @@ const Signup = () => {
                                             required
                                         >
                                             <option value="">Select</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="transgender">Transgender</option>
-                                            <option value="other">Other</option>
+                                            <option value="0">Male</option>
+                                            <option value="1">Female</option>
+                                            <option value="2">Transgender</option>
                                         </select>
                                     </div>
                                     <div className="col-6">
@@ -209,8 +278,8 @@ const Signup = () => {
                                         <input
                                             type="tel"
                                             className="form-control custom-input1"
-                                            name="phone"
-                                            value={formData.phone}
+                                            name="mobile"
+                                            value={formData.mobile}
                                             onChange={handleInputChange}
                                             required
 
@@ -223,6 +292,18 @@ const Signup = () => {
                                             className="form-control custom-input1"
                                             name="email"
                                             value={formData.email}
+                                            onChange={handleInputChange}
+                                            required
+
+                                        />
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <label className="form-label">Password</label>
+                                        <input
+                                            type="password"
+                                            className="form-control custom-input1"
+                                            name="password"
+                                            value={formData.password}
                                             onChange={handleInputChange}
                                             required
 
@@ -262,10 +343,10 @@ const Signup = () => {
                                         <input
                                             type="radio"
                                             className="form-check-input"
-                                            name="interestedIn"
+                                            name="interested_to"
                                             id="male"
-                                            value="male"
-                                            checked={formData.interestedIn === 'male'}
+                                            value="0"
+                                            checked={formData.interested_to === '0'}
                                             onChange={handleInputChange}
                                             required
                                         />
@@ -277,10 +358,10 @@ const Signup = () => {
                                         <input
                                             type="radio"
                                             className="form-check-input"
-                                            name="interestedIn"
+                                            name="interested_to"
                                             id="female"
-                                            value="female"
-                                            checked={formData.interestedIn === 'female'}
+                                            value="1"
+                                            checked={formData.interested_to === '1'}
                                             onChange={handleInputChange}
                                         />
                                         <label className="form-check-label" htmlFor="female">
@@ -291,10 +372,10 @@ const Signup = () => {
                                         <input
                                             type="radio"
                                             className="form-check-input"
-                                            name="interestedIn"
+                                            name="interested_to"
                                             id="transgender"
-                                            value="transgender"
-                                            checked={formData.interestedIn === 'transgender'}
+                                            value="2"
+                                            checked={formData.interested_to === '2'}
                                             onChange={handleInputChange}
                                         />
                                         <label className="form-check-label" htmlFor="transgender">
@@ -313,8 +394,39 @@ const Signup = () => {
                             </div>
                         )}
 
-                        {step === 3 && (
-                            <div className="step-3">
+
+
+                        {
+                            step === 3 && (
+                                <div className="step-3">
+                                    <h4>Date of birth</h4>
+                                    <div className="d-flex flex-column gap-3">
+                                        <div className="form-check">
+                                            <input
+                                                type="date"
+                                                className="form-control custom-input1"
+                                                name="dob"
+                                                value={formData.dob}
+                                                onChange={handleInputDobChange}
+                                                required
+                                            />
+
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary d-flex align-items-center gap-2 mt-4 ms-auto"
+                                        onClick={() => setStep(4)}
+                                    // disabled={!isStepValid()}
+                                    >
+                                        Next <i class="bi bi-arrow-right"></i>
+                                    </button>
+                                </div>
+                            )
+                        }
+
+                        {step === 4 && (
+                            <div className="step-4">
                                 <h4>Upload Your Pictures</h4>
                                 <div className="text-center">
                                     <label className="profile-picture-upload">
@@ -324,10 +436,11 @@ const Signup = () => {
                                             className="d-none"
                                             onChange={(e) => handleFileUpload(e, true)}
                                             required
+                                            multiple
                                         />
-                                        {formData.profilePicture ? (
+                                        {formData.profile_pic ? (
                                             <img
-                                                src={URL.createObjectURL(formData.profilePicture)}
+                                                src={URL.createObjectURL(formData.profile_pic)}
                                                 alt="Profile"
                                                 className="img-fluid rounded-circle"
                                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -349,10 +462,11 @@ const Signup = () => {
                                                     accept="image/*"
                                                     className="d-none"
                                                     onChange={(e) => handleFileUpload(e, false)}
+                                                    multiple
                                                 />
-                                                {formData.additionalPictures[index] ? (
+                                                {formData.additionalpictures[index] ? (
                                                     <img
-                                                        src={URL.createObjectURL(formData.additionalPictures[index])}
+                                                        src={URL.createObjectURL(formData.additionalpictures[index])}
                                                         alt={`Additional ${index + 1}`}
                                                         className="img-fluid"
                                                         style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }}
@@ -375,13 +489,15 @@ const Signup = () => {
                                 </button>
                             </div>
                         )}
+
+
                     </form>
                 </div>
             </div>
 
 
         </>
-       
+
     )
 }
 

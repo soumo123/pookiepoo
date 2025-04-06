@@ -11,7 +11,9 @@ async function call_api(url, headers = {}, method = "GET", body = null) {
         if (body) {
             config.data = body;
         }
+        console.log("config",config)
         const result = await axiosInstance(config);
+
         return result.data;
     } catch (error) {
         console.error("API Call Error::::", error.msg);

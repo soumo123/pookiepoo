@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Loader from './custom/Loader';
 import ParallelUpload from './components/ParallelUpload.jsx';
 
+
 function App() {
   const [count, setCount] = useState(0)
   const Lazyswiper = lazy(()=>import("./components/Swiper.jsx"))
@@ -20,8 +21,11 @@ function App() {
 
   return (
     <>
+   
     <Suspense fallback={<Loader minDelay={30000} />}>
+   
  <BrowserRouter>
+
       <Routes>
         
         <Route exact={true} path="/" element={<Lazyswiper />} />

@@ -3,56 +3,68 @@ import mongoose from 'mongoose'
 
 const userinformationSchema = new mongoose.Schema({
 
-    user_id:{
-        type:String,
-        required:true
+    user_id: {
+        type: String,
+        required: true
     },
-    about:{
-        type:String
+    about: {
+        type: String,
+        default: ""
     },
-    relationship_status:{
-        type:Object  
+    relationship_status: {
+        type: Object,
+        default: ""
     },
-    height:{
-        feet:{
-            type:String
+    height: {
+        feet: {
+            type: String,
+            default: ""
+
         },
-        inches:{
-            type:String
+        inches: {
+            type: String,
+            default: ""
+
         }
     },
-    languages:{
-        type:Array
+    languages: {
+        type: Array,
+        default: []
+
     },
-    professionals:{
-        type:Object
+    professionals: {
+        type: Object,
+        default: {}
+
     },
-    sexual_orientation:{
-        type:Array
+    sexual_orientation: {
+        type: Array,
+        default: []
+
     },
 
-    show_age:{
-        type:Boolean
+    show_age: {
+        type: Boolean,
+        default: false
     },
-    interests:{
-        type:Array
+    interests: {
+        type: Array,
+        default: []
+
     },
-    basics:{
-        type:Object
+    basics: {
+        type: Object,
+        default: {}
     },
     created_at: {
         type: Date,
-        default: () => {
-            return Date.now();
-        },
+        default: Date.now(),
         immutable: true
     },
     updated_at: {
         type: Date,
-        default: () => {
-            return Date.now();
-        }
+        default: Date.now()
     }
 })
 
-export default mongoose.model('userinformation',userinformationSchema);
+export default mongoose.model('userinformation', userinformationSchema);

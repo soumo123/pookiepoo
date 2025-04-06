@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import fetchQuesRoutes from './src/routes/question.routes.js'
+import userRoutes from './src/routes/users.routes.js'
 dotenv.config();
 
 const app = express()
@@ -17,6 +18,7 @@ app.use(bodyParser.json({ extended: true }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use("/api/v1",fetchQuesRoutes)
+app.use("/api/v1",userRoutes)
 
 app.listen(PORT, () => {
     console.log("Gateway Server is running on 8001")
