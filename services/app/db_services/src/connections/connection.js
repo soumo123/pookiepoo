@@ -11,8 +11,8 @@ const password = process.env.DB_PASSWORD
 const connectToDatabase = async () => {
     try {
       await mongoose.connect(URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true
       });
       console.log(`Connection is successful`);
     } catch (err) {

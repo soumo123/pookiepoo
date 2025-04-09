@@ -1,5 +1,5 @@
 import express from 'express'
-import { createUser } from '../controllers/users.controller.js';
+import { createUser, getProfile, refreshToken, signinUser } from '../controllers/users.controller.js';
 import multer from 'multer';
 
 const upload = multer({
@@ -16,5 +16,8 @@ router.post('/signup',
     ]),
     createUser
   );
+  router.post("/login",signinUser)
+  router.post("/refresh_token",refreshToken)
+  router.get("/get_profile",getProfile)
 
 export default router;
