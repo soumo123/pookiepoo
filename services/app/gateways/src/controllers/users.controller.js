@@ -155,8 +155,7 @@ const getProfile = async (req, res) => {
     } catch (error) {
         return res.status(500).send({
             success: false,
-            message: error.msg,
-            error: error.stack
+            error: error
         })
     }
 }

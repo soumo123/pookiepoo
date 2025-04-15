@@ -28,6 +28,6 @@ export const userLoginSuccess = (data) => {
 export const userLoginFail = (error) => {
     return {
         type: USER_LOGIN_FAIL,
-        data: error,
+        data: [],
     };
 };

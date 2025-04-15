@@ -48,11 +48,11 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log("errorerrorerrorerror",error)
     const originalRequest = error.config;
-
     // Handle expired token
     if (
-      error.response?.status === 401 &&
+      error.response?.status === 500 &&
       !originalRequest._retry &&
       refreshToken
     ) {

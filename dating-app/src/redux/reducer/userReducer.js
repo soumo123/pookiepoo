@@ -11,9 +11,9 @@ const uerDetailsReducer = (state = initialState, action) => {
         case USER_LOGIN_PENDING:
             return { ...state, user: action.data };
         case USER_LOGIN_SUCCESS:
-            return { ...state, user: action.data };
+            return { ...state, user: action.data,error:false };
         case USER_LOGIN_FAIL:
-            return { ...state, user: action.data };
+            return {user: [] ,error:true};
         default:
             return state;
     }
