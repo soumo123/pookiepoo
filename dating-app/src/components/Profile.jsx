@@ -2,6 +2,9 @@ import React, { useState,useEffect } from 'react'
 import { FiChevronLeft, FiEdit, FiMapPin, FiBriefcase, FiHeart, FiPlus } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import EditProfile from './EditProfile';
+
+
 
 const Profile = () => {
 
@@ -56,8 +59,8 @@ const Profile = () => {
                 ...profile,
                 name:userData?.user?.firstname+" "+userData?.user?.lastname,
                 age:userData?.user?.age,
-                profile:userData?.user?.profile_pic?.url
-
+                profile:userData?.user?.profile_pic?.url,
+                additionalpictures:userData?.user?.additionalpictures
             })
         }
     }, [userData.user])
@@ -175,105 +178,7 @@ console.log("profile",profile)
                         </div>
                     </div>
                 ) : (
-                    <div className="edit-profile-view">
-                        {/* Edit Profile Sections */}
-                        <div className="edit-section">
-                            <h3>Media</h3>
-                            <p>Add up to 9 photos.</p>
-                            <div className="photo-grid">
-                                {/* {profile.photos.map((photo, index) => (
-                                    <div key={index} className="photo-item">
-                                        <img src={photo} alt={`Profile ${index + 1}`} />
-                                    </div>
-                                ))} */}
-                                <div className="add-photo">
-                                    <FiPlus size={24} />
-                                </div>
-                            </div>
-                            <div className="photo-options">
-                                <h4>Photo Options</h4>
-                                <div className="option-item">
-                                    <span>Smart Photos</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Interests</h3>
-                            <div className="interests-list">
-                                {profile.interests.join(', ')}...
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Relationship Goals</h3>
-                            <div className="info-item">
-                                <span>📌 Looking for</span>
-                                <span>{profile.relationshipGoal}</span>
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Pronouns</h3>
-                            <div className="info-item">
-                                <span>📍 Add pronouns</span>
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Height</h3>
-                            <div className="info-item">
-                                <span>🎧 {profile.height}</span>
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Relationship Type</h3>
-                            <div className="info-item">
-                                <span>📒 {profile.relationshipType}</span>
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Languages | Know</h3>
-                            <div className="info-item">
-                                <span>🔄 {profile.languages.join(', ')}</span>
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Basics</h3>
-                            <div className="info-grid">
-                                <div className="info-row">
-                                    <span>📌 Zodiac</span>
-                                    <span>{profile.zodiac}</span>
-                                </div>
-                                {/* Add other basics similarly */}
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Basics</h3>
-                            <div className="info-grid">
-                                <div className="info-row">
-                                    <span>📌 Zodiac</span>
-                                    <span>{profile.zodiac}</span>
-                                </div>
-                                {/* Add other basics similarly */}
-                            </div>
-                        </div>
-
-                        <div className="edit-section">
-                            <h3>Basics</h3>
-                            <div className="info-grid">
-                                <div className="info-row">
-                                    <span>📌 Zodiac</span>
-                                    <span>{profile.zodiac}</span>
-                                </div>
-                                {/* Add other basics similarly */}
-                            </div>
-                        </div>
-                    </div>
+                    <EditProfile profileData={profile}/>
                 )}
             </div>
 

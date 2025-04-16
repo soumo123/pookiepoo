@@ -173,7 +173,9 @@ const userProfile = async (req, res) => {
     }
     try {
         const Model = mongoose.connection.collection(collection);
+        const Model1 = mongoose.connection.collection(collections.USER_INFORMATION);
         const user = await Model.findOne({ user_id: user_id });
+        const userInformation = await Model1.findOne({ user_id: user_id });
         if (!user) {
             return res.status(400).sebd({ msg: "User not found" });
         }
@@ -189,10 +191,21 @@ const userProfile = async (req, res) => {
             profile_pic:user.profile_pic,
             additionalpictures:user.additionalpictures,
         }
-
+        let obj1 = {
+            about:userInformation.about,
+            relationship_status:userInformation.relationship_status,
+            height:userInformation.height,
+            languages:userInformation.languages,
+            professionals:userInformation.professionals,
+            sexual_orientation:userInformation.sexual_orientation,
+            show_age:userInformation.show_age,
+            interests:userInformation.interests,
+            basics:userInformation.basics
+        }
         return res.status(200).send({
             success:true,
             data:obj,
+            data1:obj1,
             message:"Get user profile"
         })
 
@@ -206,6 +219,35 @@ const userProfile = async (req, res) => {
     }
 }
 
-export { insertData, signin, refreshToken, userProfile }
+const updateUserInfo = async(req,res)=>{
+    const { collection, user_id } = req.query;
+    const data = req.body
+    console.log("collection,user_id",collection,user_id,data)
+    if (!collection) {
+        return res.status(400).json({ msg: "Missing collection or data" });
+    }
+
+    if (!isValidCollection(collection)) {
+        return res.status(400).json({ msg: `Invalid collection name: ${collection}` });
+    }
+    try {
+        const Model = mongoose.connection.collection(collection);
+        const response = await Model.updateOne({ user_id: user_id },{$set:data});
+        console.log("response",response)
+        return res.status(200).send({
+            success:true,
+            message:"Update Successfully"
+        })
+    } catch (error) {
+        console.log("errorerror",error.stack)
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message
+        });
+    }
+}
+
+export { insertData, signin, refreshToken, userProfile ,updateUserInfo}
 
 

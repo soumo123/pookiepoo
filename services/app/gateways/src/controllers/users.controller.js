@@ -139,7 +139,7 @@ const getProfile = async (req, res) => {
         if (!user_id) {
             return res.status(400).send({
                 success: false,
-                message: "Refresh token is missing"
+                message: "User Id missing"
             })
         }
         const url = `/getprofile?collection=users&user_id=${user_id}`
@@ -149,7 +149,8 @@ const getProfile = async (req, res) => {
         return res.status(200).send({
             success:true,
             message:"Get profile",
-            data:result.data
+            data:result.data,
+            data1:result.data1
         });
 
     } catch (error) {
@@ -161,5 +162,45 @@ const getProfile = async (req, res) => {
 }
 
 
+const updateProfile = async(req,res)=>{
+    const { user_id } = req.query;
+    const body = req.body;
+    const accessToken = req.headers.authorization;
+    try {
+        if (!user_id) {
+            return res.status(400).send({
+                success: false,
+                message: "User Id missing"
+            })
+        }
+        if(!body){
+            return res.status(400).send({
+                success: false,
+                message: "Body missing"
+            }) 
+        }
 
-export { createUser, signinUser, refreshToken, getProfile }
+        const url = `/updateprofile?collection=userinformation&user_id=${user_id}`
+        const result = await call_api(
+            url,
+            {
+                Authorization: accessToken,
+            },
+            'patch',
+            body
+        );
+        return res.status(200).send({
+            success:true,
+            message:"Profile Updated",
+
+        });
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            error: error
+        })
+    }
+}
+
+
+export { createUser, signinUser, refreshToken, getProfile ,updateProfile}

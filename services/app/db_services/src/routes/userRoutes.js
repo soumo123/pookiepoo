@@ -1,5 +1,5 @@
 import express from 'express';
-import { insertData, refreshToken, signin, userProfile } from '../controllers/auth.controller.js';
+import { insertData, refreshToken, signin, updateUserInfo, userProfile } from '../controllers/auth.controller.js';
 import { validateUserData } from '../utils/uploadMiddleware.js';
 import verifyToken from '../middlewares/verifyToken.js';
 
@@ -13,6 +13,7 @@ router.post('/createuser',
 router.post("/signin",signin)
 router.post("/refresh",refreshToken)
 router.get("/getprofile",verifyToken,userProfile)
+router.patch("/updateprofile",verifyToken,updateUserInfo)
 
 
 export default router;

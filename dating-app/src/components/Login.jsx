@@ -45,7 +45,7 @@ const Login = () => {
       }
       // alert(`Welcome ${user.firstname}`);
     } catch (err) {
-      toast.success("Login Failed",
+      toast.error("Login Failed",
         {
           autoClose: 2000,
           position: "top-center",

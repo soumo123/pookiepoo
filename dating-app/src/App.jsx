@@ -34,8 +34,9 @@ function App() {
 
     try {
       const res = await axiosInstance.get(`/get_profile?user_id=${user_id}`);
-      if (res.data.data) {
-        dispatch(userLoginSuccess(res.data.data))
+      if (res.data) {
+
+        dispatch(userLoginSuccess(res.data.data,res.data.data1))
       }
     } catch (error) {
       dispatch(userLoginFail(error.config.data))
