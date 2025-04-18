@@ -1,4 +1,4 @@
-import axiosInstance from "../axiosinstance.js"
+import axiosInstance from "../axiosInstance.js"
 
 async function call_api(url, headers = {}, method = "GET", body = null) {
     try {

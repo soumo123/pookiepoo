@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  gateways:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    container_name: gatewayservice
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+    restart: always

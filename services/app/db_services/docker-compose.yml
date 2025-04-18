@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  db_services:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    container_name: dbservices
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - DB_USERNAME=soummyabiswas
+      - DB_PASSWORD=admin
+      - USE_CLUSTER=false
+    restart: always
